@@ -2,7 +2,7 @@
 
 Flicks is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **3** hours spent in total
+Time spent: **7** hours spent in total
 
 ## User Stories
 
@@ -16,31 +16,31 @@ The following **required** functionality is complete:
 The following **optional** features are implemented:
 
 - [X] User sees an error message when there's a networking error.
-- [ ] Movies are displayed using a CollectionView instead of a TableView.
-- [ ] User can search for a movie.
-- [ ] All images fade in as they are loading.
+- [X] Movies are displayed using a CollectionView instead of a TableView.
+- [X] User can search for a movie.
+- [X] All images fade in as they are loading.
 - [ ] Customize the UI.
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [X] User can end editing in the search bar by clicking off of it.
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. How to implement custom tab bar
+2. How to allow the user to choose between a collection and table view
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/jihJXKL.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/rZguJGz.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+The search bar provided me the biggest challenge because it took a while to figure out the best way to logically implement it. I kept on jumping between making the filtered data an array of strings and then comparing it to the titles or just keeping the filtered data as an array of NSDictionary so that I could compare it to movies directly. I ended up choosing the latter option, and I feel that it worked out well. Other than that, a few minor syntax issues slowed me down since I am still getting used to Swift.
 
 ## License
 
