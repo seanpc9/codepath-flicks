@@ -13,11 +13,17 @@ import MBProgressHUD
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var errorView: UIView!
+    @IBOutlet weak var errorLabel: UILabel!
     
     var movies: [NSDictionary]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        errorLabel.text = "⚠️ Network Error"
+        errorLabel.textColor = UIColor.whiteColor()
+        errorLabel.backgroundColor = UIColor.blackColor()
         
         // Initialize a UIRefreshControl
         let refreshControl = UIRefreshControl()
@@ -53,9 +59,12 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                         data, options:[]) as? NSDictionary {
                             print("response: \(responseDictionary)")
                             
-                            self.movies = responseDictionary["results"] as! [NSDictionary]
+                            self.movies = responseDictionary["results"] as? [NSDictionary]
                             self.tableView.reloadData()
+                            self.errorView.hidden = true
                     }
+                } else {
+                    self.errorView.hidden = false
                 }
         })
         task.resume()
@@ -84,14 +93,20 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let movie = movies![indexPath.row]
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
-        let posterPath = movie["poster_path"] as! String
-        
-        let baseUrl = "http://image.tmdb.org/t/p/w500"
-        let imageUrl = NSURL(string: baseUrl + posterPath)
+        // let posterPath = movie["poster_path"] as! String
+        if let posterPath = movie["poster_path"] as? String {
+            let posterBaseUrl = "http://image.tmdb.org/t/p/w500"
+            let posterUrl = NSURL(string: posterBaseUrl + posterPath)
+            cell.posterView.setImageWithURL(posterUrl!)
+        }
+        else {
+            // No poster image. Can either set to nil (no image) or a default movie poster image
+            // that you include as an asset
+            cell.posterView.image = nil
+        }
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
-        cell.posterView.setImageWithURL(imageUrl!)
         
         print("row \(indexPath.row)")
         return cell
