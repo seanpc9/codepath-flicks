@@ -42,6 +42,46 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 The search bar provided me the biggest challenge because it took a while to figure out the best way to logically implement it. I kept on jumping between making the filtered data an array of strings and then comparing it to the titles or just keeping the filtered data as an array of NSDictionary so that I could compare it to movies directly. I ended up choosing the latter option, and I feel that it worked out well. Other than that, a few minor syntax issues slowed me down since I am still getting used to Swift.
 
+# Project 2 - *Flicks Part 2*
+
+**Flicks** is a movies app displaying box office and top rental DVDs using [The Movie Database API](http://docs.themoviedb.apiary.io/#).
+
+Time spent: **X** hours spent in total
+
+## User Stories
+
+The following **required** functionality is completed:
+
+- [ ] User can view movie details by tapping on a cell.
+- [ ] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
+- [ ] Customize the selection effect of the cell.
+
+The following **optional** features are implemented:
+
+- [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
+- [ ] Customize the navigation bar.
+
+The following **additional** features are implemented:
+
+- [ ] List anything else that you can get done to improve the app functionality!
+
+Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
+
+1. 
+2. 
+
+## Video Walkthrough 
+
+Here's a walkthrough of implemented user stories:
+
+<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
+## Notes
+
+Describe any challenges encountered while building the app.
+
 ## License
 
     Copyright [2016] [Sean Crenshaw]
