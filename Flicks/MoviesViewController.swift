@@ -70,8 +70,9 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
         
         let movie = filteredData![indexPath.item]
+        let posterBaseUrl = "http://image.tmdb.org/t/p/w500"
+        
         if let posterPath = movie["poster_path"] as? String {
-            let posterBaseUrl = "http://image.tmdb.org/t/p/w500"
             let posterUrl = NSURL(string: posterBaseUrl + posterPath)
             let imageRequest = NSURLRequest(URL: posterUrl!)
             cell.posterView.setImageWithURLRequest(
@@ -210,6 +211,24 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         searchBar.showsCancelButton = false
         searchBar.text = ""
         searchBar.resignFirstResponder()
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        let cell = sender as! UICollectionViewCell
+        let indexPath = collectionView.indexPathForCell(cell)
+        let movie = movies![indexPath!.row]
+        
+        let detailViewController = segue.destinationViewController as! DetailViewController
+        detailViewController.movie = movie
+        
+        print("prepare for segue called")
+        
+        // Get the new view controller using segue.destinationViewController
+        // Pass the selected object to the new view controller
     }
 
 }
