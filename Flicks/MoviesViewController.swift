@@ -15,13 +15,26 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var errorView: UIView!
     @IBOutlet weak var errorLabel: UILabel!
-    @IBOutlet weak var searchBar: UISearchBar!
     
     var movies: [NSDictionary]?
     var filteredData: [NSDictionary]?
+    var searchBar: UISearchBar!
+    var endpoint : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // create the search bar programatically since you won't be
+        // able to drag one onto the navigation bar
+        searchBar = UISearchBar()
+        searchBar.sizeToFit()
+        
+        // the UIViewController comes with a navigationItem property
+        // this will automatically be initialized for you if when the
+        // view controller is added to a navigation controller's stack
+        // you just need to set the titleView to be the search bar
+        searchBar.placeholder = "Search for a Movie"
+        navigationItem.titleView = searchBar
         
         collectionView.backgroundColor = UIColor.blackColor()
         
@@ -43,13 +56,18 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
         let tapLabelGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("labelTap:"))
         errorLabel.addGestureRecognizer(tapLabelGestureRecognizer)
         
-        collectionView.userInteractionEnabled = true;
-        let tapViewGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("viewTap:"))
-        collectionView.addGestureRecognizer(tapViewGestureRecognizer)
+        //collectionView.userInteractionEnabled = true;
+        //let tapViewGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("viewTap:"))
+        //collectionView.addGestureRecognizer(tapViewGestureRecognizer)
         
         loadDataFromNetwork()
 
         // Do any additional setup after loading the view.
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        print("did scroll")
+        searchBar.endEditing(true)
     }
     
     func labelTap(lab: AnyObject) {
@@ -103,7 +121,12 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
             cell.posterView.image = nil
         }
         
-        print("row \(indexPath.item)")
+        // User sees no color when selecting a cell
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.clearColor()
+        cell.selectedBackgroundView = backgroundView
+        
+        // print("row \(indexPath.item)")
         return cell
         
     }
@@ -133,7 +156,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
     func loadDataFromNetwork() {
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = NSURL(string: "https://api.themoviedb.org/3/movie/\(endpoint)?api_key=\(apiKey)")
         let request = NSURLRequest(
             URL: url!,
             cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData,
@@ -156,7 +179,7 @@ class MoviesViewController: UIViewController, UICollectionViewDataSource, UIColl
                 if let data = dataOrNil {
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
-                            print("response: \(responseDictionary)")
+                            // print("response: \(responseDictionary)")
                             
                             self.movies = responseDictionary["results"] as? [NSDictionary]
                             self.filteredData = self.movies
